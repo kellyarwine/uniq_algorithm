@@ -29,17 +29,15 @@ class Solver
   end
 
   def unique(sorted_inputs)
-    result = []
+    determine_if_unique(sorted_inputs).compact
+  end
 
-    sorted_inputs.each_with_index do |input, i|
-      if input != sorted_inputs[i+1]
-        result << input
-      elsif last_element?(i, sorted_inputs.length)
-        result << input
-      end
-    end
+  def determine_if_unique(sorted_inputs)
+    sorted_inputs.each_with_index.map { |input, i| input if same_input_as_next?(input, sorted_inputs[i + 1]) || last_element?(i, sorted_inputs.length) }
+  end
 
-    result
+  def same_input_as_next?(input, next_input)
+    input != next_input
   end
 
   def last_element?(index, array_length)
